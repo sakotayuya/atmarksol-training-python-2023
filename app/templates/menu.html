@@ -9,7 +9,7 @@
 
     <!-- Right navbar links -->
     <div class="navbar-nav ml-auto logout-area">
-      <a href="{{ url_for('logout') }}">ログアウト</a>
+      <a href="{{ url_for('login.logout') }}">ログアウト</a>
     </div>
   </nav>
   <!-- /.navbar -->
@@ -50,7 +50,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="{{ url_for('user_list') }}" class="nav-link">
+            <a href="{{ url_for('user.user_list') }}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 ユーザー覧
@@ -58,7 +58,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url_for('register') }}" class="nav-link">
+            <a href="{{ url_for('user.register') }}" class="nav-link">
               <i class="nav-icon fas fa-user-plus"></i>
               <p>
                 新規登録
@@ -66,7 +66,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url_for('logout') }}" class="nav-link">
+            <a href="{{ url_for('login.logout') }}" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
                 ログアウト

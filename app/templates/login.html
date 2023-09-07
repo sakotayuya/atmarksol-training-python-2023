@@ -16,7 +16,7 @@
       {% include 'message.html' %}
       <p class="login-box-msg">ログイン情報をご入力のうえ<br>「ログイン」ボタンを押してください</p>
 
-      <form action="{{ url_for('login') }}" method="post">
+      <form action="{{ url_for('login.login') }}" method="post">
         <div class="input-group mb-3">
           <input type="email" name="email" class="form-control" placeholder="メールアドレス">
           <div class="input-group-append">
@@ -43,7 +43,7 @@
       </form>
 
       <p class="mb-0 mt-3">
-        <a href="{{ url_for('register') }}" class="text-center">新規登録</a>
+        <a href="{{ url_for('user.register') }}" class="text-center">新規登録</a>
       </p>
     </div>
     <!-- /.card-body -->
