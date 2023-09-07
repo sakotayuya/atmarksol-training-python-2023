@@ -1,0 +1,78 @@
+.register-box .register-btn-outer {
+    justify-content: center;
+}
+
+.register-box .register-btn-inner {
+    max-width: 40%;
+    flex: auto;
+}
+
+input[type=checkbox] {
+	width: 20px;
+	height:	20px;
+    vertical-align: middle;
+}
+  
+.regist-checkbox label {
+    vertical-align: middle;
+    margin-bottom: 0;
+    margin-right: 5px;
+}
+
+.regist-selectbox {
+    position: relative;
+}
+
+.regist-selectbox::before,
+.regist-selectbox::after {
+    position: absolute;
+    content: '';
+    pointer-events: none;
+}
+
+.regist-selectbox::before {
+    display: inline-block;
+    left: 108px;
+    width: 2em;
+    height: 2.1em;
+    border-radius: 0 3px 3px 0;
+    background-color: #949a9e;
+}
+
+.regist-selectbox::after {
+    top: 43%;
+    left: 117px;
+    transform: translate(50%, -50%) rotate(45deg);
+    width: 6px;
+    height: 6px;
+    border-bottom: 3px solid #fff;
+    border-right: 3px solid #fff;
+}
+
+.regist-selectbox select {
+    appearance: none;
+    min-width: 100px;
+    padding: 7px 15px 5px 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #ececec;
+    color: #333;
+    font-size: 0.9em;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.regist-selectbox select:focus {
+    outline: 2px solid #949a9e;
+}
+
+.user-box {
+    width: 470px;
+}
+
+.box-title {
+    display: flex;
+    align-items: center;
+    font-weight: bolder;
+    width: 160px;
+}

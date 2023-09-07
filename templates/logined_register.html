@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block title %}@sol作成課題 | 新規登録{% endblock %}
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/register.css') }}">
+{% endblock %}
+
+{% block content %}
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  {% include 'menu.html' %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>新規登録</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ url_for('user_list') }}">Home</a></li>
+              <li class="breadcrumb-item active">新規登録</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="register-box user-box m-auto">
+                  <div class="card card-outline card-primary">
+                    <div class="card-body">
+                      {% include 'message.html' %}
+                      <p class="login-box-msg">ユーザ情報をご入力のうえ<br>「登録」ボタンを押してください</p>
+                
+                      <form id="register-form" method="post">
+                        <div class="input-group mb-3">
+                          <div class="box-title">ユーザ性</div>
+                          <input type="text" name="first_name" class="form-control" maxlength="20" placeholder="山田">
+                          <div class="input-group-append">
+                            <div class="input-group-text">
+                              <span class="fas fa-user"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="box-title">ユーザ名</div>
+                          <input type="text" name="last_name" class="form-control" maxlength="20" placeholder="太郎">
+                          <div class="input-group-append">
+                            <div class="input-group-text">
+                              <span class="fas fa-user"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="box-title">メールアドレス</div>
+                          <input type="text" name="email" class="form-control" maxlength="255" placeholder="yamada@example.com" required>
+                          <div class="input-group-append">
+                            <div class="input-group-text">
+                              <span class="fas fa-envelope"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="box-title">パスワード</div>
+                          <input id="password" type="password" name="password" class="form-control" minlength="8" maxlength="30" placeholder="password@123" required>
+                          <div class="input-group-append">
+                            <div class="input-group-text">
+                              <span class="fas fa-lock"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="regist-selectbox">
+                          <label for="status">状態</label>
+                          <select name="status">
+                            <option value="enable" selected>有効</option>
+                            <option value="disable">無効</option>
+                          </select>
+                        </div>
+                        <div class="regist-checkbox mt-2">
+                          <label for="deleted">削除</label>
+                          <input type="checkbox" name="deleted" value='1'>
+                        </div>
+                        <div class="row register-btn-outer mt-2">
+                          <div class="col-4 register-btn-outer">
+                            <button type="submit" class="btn btn-primary btn-block">登録</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <!-- /.form-box -->
+                  </div><!-- /.card -->
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  {% include 'footer.html' %}
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+{% endblock %}
+
+{% block page_js %}
+<script>
+  $(document).ready(function () {
+    $("#register-form").submit(function (event) {
+      var password = $("#password").val();
+      if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&_/\\])[A-Za-z\d@$!%*?&_/\\]+$/.test(password)) {
+        alert("パスワードには英数字と記号が少なくとも1つずつ含まれる必要があります");
+        event.preventDefault();
+      }
+    });
+  });
+</script>
+{% endblock %}
+
+

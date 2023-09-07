@@ -1,0 +1,26 @@
+#example1 th,
+#example1 td {
+    line-height: 1;
+}
+
+#example1_wrapper .dataTables_length {
+    display: none;
+}
+
+.icon-th {
+    width: 8%;
+}
+
+.icon-td {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+}
+
+.id-th {
+    width: 10%;
+}
+
+.id-th-name {
+    width: 11%;
+}

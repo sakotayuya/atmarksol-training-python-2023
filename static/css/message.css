@@ -1,0 +1,9 @@
+.messages {
+    padding: 0;
+    color: red;
+    text-align: center;
+}
+
+.messages li {
+    list-style-type: none;
+}

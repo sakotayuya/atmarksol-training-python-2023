@@ -1,0 +1,8 @@
+.login-box .login-btn-outer {
+    justify-content: center;
+}
+
+.login-box .login-btn-inner {
+    max-width: 40%;
+    flex: auto;
+}

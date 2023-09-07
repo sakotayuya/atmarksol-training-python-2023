@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block title %}@sol作成課題 | ユーザ一覧{% endblock %}
+{% block page_css %}
+  <link rel="stylesheet" href="{{ url_for('static',filename='plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/user_list.css') }}">
+{% endblock %}
+
+{% block content %}
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  {% include 'menu.html' %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>ユーザ一覧</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ url_for('user_list') }}">Home</a></li>
+              <li class="breadcrumb-item active">ユーザ一覧</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    {% include 'message.html' %}
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th class="id-th">ユーザID</th>
+                      <th class="id-th-name">ユーザ性</th>
+                      <th class="id-th-name">ユーザ名</th>
+                      <th>メールアドレス</th>
+                      <th class="icon-th">詳細</th>
+                      <th class="icon-th">編集</th>
+                      <th class="icon-th">削除</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for users in user_list %}
+                    <tr>
+                      <td>{{ users.id }}</td>
+                      <td>{{ users.first_name }}</td>
+                      <td>{{ users.last_name }}</td>
+                      <td>{{ users.email }}</td>
+                      <td>
+                        <a class="icon-td" href="{{ url_for('user_detail', user_id=users.id) }}">
+                          <i class="fas fa-user-cog fa-fw"></i>
+                        </a>
+                      </td>
+                      <td>
+                        <a class="icon-td" href="{{ url_for('user_edit', user_id=users.id) }}">
+                          <i class="fas fa-user-edit fa-fw"></i>
+                        </a>
+                      </td>
+                      <td>
+                        <a class="icon-td" href="{{ url_for('delete', user_id=users.id) }}" onclick="return confirmDelete()">
+                          <i class="fas fa-trash-alt fa-fw"></i>
+                        </a>
+                    </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  
+  {% include 'footer.html' %}
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+{% endblock %}
+
+{% block page_js %}
+<!-- DataTables  & Plugins -->
+<script src="{{ url_for('static',filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/jszip/jszip.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/pdfmake/vfs_fonts.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ url_for('static',filename='plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true,
+      "pageLength": 20,
+      "autoWidth": false,
+    });
+  });
+
+  function confirmDelete() {
+      if (confirm("ログインユーザーの場合削除後、ログアウトします。本当に削除しますか？")) {
+          return true;
+      } else {
+          return false;
+      }
+  }
+</script>
+{% endblock %}
+
