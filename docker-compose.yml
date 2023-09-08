@@ -12,7 +12,7 @@ services:
     depends_on:
       - admin-mariadb
     volumes:                  
-      - app-data:/app/data 
+      - ./app:/app 
 
   admin-mariadb:
     container_name: "admin-mariadb"
@@ -24,20 +24,14 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: local-python2023
-      MYSQL_USER: root
       MYSQL_PASSWORD: password
     networks:
       - app-net
     volumes:
-      - mariadb-data:/var/lib/mysql
-    command: ["--init-file", "/docker-entrypoint-initdb.d/python2023.sql"]
+      - .db:/var/lib/mysql
 
 networks:
   app-net:
     driver: bridge
-  
-volumes:
-  mariadb-data:
-  app-data:
 
     

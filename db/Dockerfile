@@ -1,7 +1,7 @@
 FROM mariadb:10.5
 
 WORKDIR /db
-COPY python2023.sql /docker-entrypoint-initdb.d/
+COPY python2023.sql .
 
 EXPOSE 3306
 
