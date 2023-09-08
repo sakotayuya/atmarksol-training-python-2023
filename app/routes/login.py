@@ -12,12 +12,12 @@ def login():
 		request_email = request.form.get('email')
 		request_password = request.form.get('password')
 
-		user = Users.query.filter_by(email=request_email).first()
+		fetched_user = Users.query.filter_by(email=request_email).first()
 
 		# 条件に応じてエラーメッセージ変更
-		if user and user.password == request_password:
-			if user.status == 'enable' and user.deleted is not True:
-				login_user(user)
+		if fetched_user and fetched_user.password == request_password:
+			if fetched_user.status == 'enable' and fetched_user.deleted is not True:
+				login_user(fetched_user)
 				return redirect(url_for('user.user_list'))
 			else:
 				flash('削除済みユーザか無効なユーザです', 'error')
