@@ -20,7 +20,7 @@ def user_edit(user_id):
 	user = Users.query.get(user_id)
 
 	if request.method == 'POST':
-		# POST時にフォームからのリクエスト値を取得し、更新
+	    # POST時にフォームからのリクエスト値を取得し、更新
 		user.first_name = request.form.get('first_name')
 		user.last_name = request.form.get('last_name')
 		user.password = request.form.get('password') or user.password

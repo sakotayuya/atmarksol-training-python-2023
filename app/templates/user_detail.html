@@ -1,127 +1,133 @@
 {% extends 'base.html' %}
 {% block title %}@sol | ユーザ詳細{% endblock %}
 {% block page_css %}
-  <link rel="stylesheet" href="{{ url_for('static',filename='plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static',filename='plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static',filename='plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static',filename='css/user_detail.css') }}">
+<link rel="stylesheet"
+    href="{{ url_for('static',filename='plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet"
+    href="{{ url_for('static',filename='plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+<link rel="stylesheet"
+    href="{{ url_for('static',filename='plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/user_detail.css') }}">
 {% endblock %}
 
 {% block content %}
+
 <body class="hold-transition sidebar-mini">
-<div class="wrapper">
-  {% include 'menu.html' %}
+    <div class="wrapper">
+        {% include 'menu.html' %}
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>ユーザ詳細</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ url_for('user.user_list') }}">Home</a></li>
-              <li class="breadcrumb-item active">ユーザ詳細</li>
-            </ol>
-          </div>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>ユーザ詳細</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="{{ url_for('user.user_list') }}">Home</a></li>
+                                <li class="breadcrumb-item active">ユーザ詳細</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-md-3 mw-100">
+
+                            <!-- Profile Image -->
+                            <div class="card card-primary card-outline detail-box">
+                                <div class="card-body box-profile">
+                                    <div class="text-center">
+                                        <img class="profile-user-img img-fluid img-circle"
+                                            src="{{ url_for('static',filename='img/user_icon.png') }}"
+                                            alt="User profile picture">
+                                    </div>
+
+                                    <h3 class="profile-username text-center">{{ user.first_name + user.last_name}}</h3>
+
+                                    <p class="text-muted text-center">Software Engineer</p>
+
+                                    <ul class="list-group list-group-unbordered mb-3">
+                                        <li class="list-group-item">
+                                            <b>ユーザID</b> <a class="float-right">{{ user.id }}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>ユーザ性</b> <a class="float-right">{{ user.first_name }}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>ユーザ名</b> <a class="float-right">{{ user.last_name }}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>メールアドレス</b> <a class="float-right">{{ user.email }}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>状態</b>
+                                            <a class="float-right">
+                                                {% if user.status == 'enable' %}有効{% endif %}
+                                                {% if user.status == 'disable' %}無効{% endif %}
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>削除</b>
+                                            <a class="float-right">
+                                                {% if user.deleted == true %}削除済みユーザ{% endif %}
+                                                {% if user.deleted == false %}未削除ユーザ{% endif %}
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <a href="{{ url_for('user.user_edit', user_id=user.id) }}"
+                                        class="btn btn-primary btn-block"><b>編集</b></a>
+                                    <a href="{{ url_for('user.delete', user_id=user.id) }}"
+                                        onclick="return confirmDelete()" class="btn btn-primary btn-block"><b>削除</b></a>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
+        <!-- /.content-wrapper -->
+        {% include 'footer.html' %}
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row justify-content-center">
-          <div class="col-md-3 mw-100">
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
 
-            <!-- Profile Image -->
-            <div class="card card-primary card-outline detail-box">
-              <div class="card-body box-profile">
-                <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle"
-                       src="{{ url_for('static',filename='img/user_icon.png') }}"
-                       alt="User profile picture">
-                </div>
+    {% endblock %}
 
-                <h3 class="profile-username text-center">{{ user.first_name + user.last_name}}</h3>
+    {% block page_js %}
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true,
+                "pageLength": 20,
+                "autoWidth": false,
+            });
+        });
 
-                <p class="text-muted text-center">Software Engineer</p>
-
-                <ul class="list-group list-group-unbordered mb-3">
-                  <li class="list-group-item">
-                    <b>ユーザID</b> <a class="float-right">{{ user.id }}</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>ユーザ性</b> <a class="float-right">{{ user.first_name }}</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>ユーザ名</b> <a class="float-right">{{ user.last_name }}</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>メールアドレス</b> <a class="float-right">{{ user.email }}</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>状態</b>
-                    <a class="float-right">
-                      {% if user.status == 'enable' %}有効{% endif %}
-                      {% if user.status == 'disable' %}無効{% endif %}
-                    </a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>削除</b>
-                    <a class="float-right">
-                      {% if user.deleted == true %}削除済みユーザ{% endif %}
-                      {% if user.deleted == false %}未削除ユーザ{% endif %}
-                    </a>
-                  </li>
-                </ul>
-
-                <a href="{{ url_for('user.user_edit', user_id=user.id) }}" class="btn btn-primary btn-block"><b>編集</b></a>
-                <a href="{{ url_for('user.delete', user_id=user.id) }}" onclick="return confirmDelete()" class="btn btn-primary btn-block"><b>削除</b></a>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-  {% include 'footer.html' %}
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
-{% endblock %}
-
-{% block page_js %}
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true,
-      "pageLength": 20,
-      "autoWidth": false,
-    });
-  });
-
-  function confirmDelete() {
-      if (confirm("ログインユーザーの場合削除後、ログアウトします。本当に削除しますか？")) {
-          return true;
-      } else {
-          return false;
-      }
-  }
-</script>
-{% endblock %}
+        function confirmDelete() {
+            if (confirm("ログインユーザーの場合削除後、ログアウトします。本当に削除しますか？")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+    {% endblock %}

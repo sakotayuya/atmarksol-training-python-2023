@@ -5,51 +5,51 @@
 {% endblock %}
 
 {% block content %}
+
 <body class="hold-transition login-page">
-<div class="login-box">
-  <!-- /.login-logo -->
-  <div class="card card-outline card-primary">
-    <div class="card-header text-center">
-      <span class="h1">@sol作成課題</span>
-    </div>
-    <div class="card-body">
-      {% include 'message.html' %}
-      <p class="login-box-msg">ログイン情報をご入力のうえ<br>「ログイン」ボタンを押してください</p>
-
-      <form action="{{ url_for('login.login') }}" method="post">
-        <div class="input-group mb-3">
-          <input type="email" name="email" class="form-control" placeholder="メールアドレス">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <span class="h1">@sol作成課題</span>
             </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control" placeholder="パスワード">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+            <div class="card-body">
+                {% include 'message.html' %}
+                <p class="login-box-msg">ログイン情報をご入力のうえ<br>「ログイン」ボタンを押してください</p>
+
+                <form action="{{ url_for('login.login') }}" method="post">
+                    <div class="input-group mb-3">
+                        <input type="email" name="email" class="form-control" placeholder="メールアドレス">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" name="password" class="form-control" placeholder="パスワード">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row login-btn-outer">
+                        <!-- /.col -->
+                        <div class="col-4 login-btn-inner">
+                            <button type="submit" class="btn btn-primary btn-block">ログイン</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                <p class="mb-0 mt-3">
+                    <a href="{{ url_for('user.register') }}" class="text-center">新規登録</a>
+                </p>
             </div>
-          </div>
+            <!-- /.card-body -->
         </div>
-        <div class="row login-btn-outer">
-          <!-- /.col -->
-          <div class="col-4 login-btn-inner">
-            <button type="submit" class="btn btn-primary btn-block">ログイン</button>
-          </div>
-          <!-- /.col -->
-        </div>
-      </form>
-
-      <p class="mb-0 mt-3">
-        <a href="{{ url_for('user.register') }}" class="text-center">新規登録</a>
-      </p>
+        <!-- /.card -->
     </div>
-    <!-- /.card-body -->
-  </div>
-  <!-- /.card -->
-</div>
-<!-- /.login-box -->
-{% endblock %}
-
+    <!-- /.login-box -->
+    {% endblock %}
