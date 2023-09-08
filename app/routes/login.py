@@ -9,13 +9,13 @@ login_blueprint = Blueprint('login', __name__)
 @login_blueprint.route('/', methods=['GET', 'POST'])
 def login():
 	if request.method == 'POST':
-		email = request.form.get('email')
-		password = request.form.get('password')
+		request_email = request.form.get('email')
+		request_password = request.form.get('password')
 
-		user = Users.query.filter_by(email=email).first()
+		user = Users.query.filter_by(email=request_email).first()
 
 		# 条件に応じてエラーメッセージ変更
-		if user and user.password == password:
+		if user and user.password == request_password:
 			if user.status == 'enable' and user.deleted is not True:
 				login_user(user)
 				return redirect(url_for('user.user_list'))
@@ -32,4 +32,4 @@ def login():
 def logout():
 	logout_user()
 	flash('ログアウトしました', 'success')
-	return render_template('login.html')
+	return redirect(url_for('login.login'))

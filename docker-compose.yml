@@ -10,12 +10,12 @@ services:
     networks:
       - app-net
     depends_on:
-      - admin-mariadb
+      - admin-db
     volumes:                  
       - ./app:/app 
 
-  admin-mariadb:
-    container_name: "admin-mariadb"
+  admin-db:
+    container_name: "admin-db"
     build: 
       context: db/
       dockerfile: Dockerfile

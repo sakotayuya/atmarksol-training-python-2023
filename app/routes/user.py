@@ -10,8 +10,8 @@ user_blueprint = Blueprint('user', __name__)
 @user_blueprint.route('/user_detail/<int:user_id>')
 @login_required
 def user_detail(user_id):
-  user = Users.query.get(user_id)
-  return render_template('user_detail.html', user=user, current_user=current_user)
+    user = Users.query.get(user_id)
+    return render_template('user_detail.html', user=user, current_user=current_user)
 
 #ユーザ編集
 @user_blueprint.route('/user_edit/<int:user_id>', methods=['GET', 'POST'])
@@ -25,7 +25,7 @@ def user_edit(user_id):
 		user.last_name = request.form.get('last_name')
 		user.password = request.form.get('password') or user.password
 		user.status = request.form.get('status')
-		user.deleted = True if request.form.get('deleted') == '1' else False if request.form.get('deleted') == '0' else False
+		user.deleted = True if request.form.get('deleted') == '1' else False
 	
 		db.session.commit()
 
@@ -50,18 +50,25 @@ def user_list():
 @user_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        email = request.form.get('email')
-        user = Users.query.filter_by(email=email).first()
+        request_email = request.form.get('email')
+        user = Users.query.filter_by(email=request_email).first()
         
 		# POST時にフォームからのリクエスト値を取得してDBに登録
         if user is None:
-            first_name = request.form.get('first_name')
-            last_name = request.form.get('last_name')
-            password = request.form.get('password')
-            status = request.form.get('status')
-            deleted = request.form.get('deleted') == '1'
+            request_first_name = request.form.get('first_name')
+            request_last_name = request.form.get('last_name')
+            request_password = request.form.get('password')
+            request_status = request.form.get('status')
+            request_deleted = request.form.get('deleted') == '1'
 
-            regist_use = Users(first_name=first_name, last_name=last_name, email=email, password=password, status=status, deleted=deleted)
+            regist_use = Users(
+				first_name=request_first_name, 
+				last_name=request_last_name, 
+				email=request_email, 
+				password=request_password, 
+				status=request_status, 
+				deleted=request_deleted
+			)
             
             db.session.add(regist_use)
             db.session.commit()

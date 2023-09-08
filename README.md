@@ -3,7 +3,7 @@
 
 ## 環境構築手順  
 ```docker-compose build  
-docker exec -it admin-mariadb bash  
+docker exec -it admin-db bash  
 mysql -u root -p < python2023.sql
 password入力を求められるのでpasswordと入力してenter
 exit  
