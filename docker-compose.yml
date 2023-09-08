@@ -1,0 +1,43 @@
+version: '3'
+services:
+  admin-app:
+    container_name: "admin-app"
+    build: 
+      context: app/
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - app-net
+    depends_on:
+      - admin-mariadb
+    volumes:                  
+      - app-data:/app/data 
+
+  admin-mariadb:
+    container_name: "admin-mariadb"
+    build: 
+      context: db/
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: local-python2023
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    networks:
+      - app-net
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    command: ["--init-file", "/docker-entrypoint-initdb.d/python2023.sql"]
+
+networks:
+  app-net:
+    driver: bridge
+  
+volumes:
+  mariadb-data:
+  app-data:
+
+    
