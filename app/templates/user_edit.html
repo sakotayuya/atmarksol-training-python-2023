@@ -52,8 +52,7 @@
                                                     <div class="input-group mb-3">
                                                         <div class="box-title">ユーザ性</div>
                                                         <input type="text" name="first_name" class="form-control"
-                                                            maxlength="20" placeholder="山田"
-                                                            value="{{ user.first_name }}">
+                                                            placeholder="山田" value="{{ user.first_name }}">
                                                         <div class="input-group-append">
                                                             <div class="input-group-text">
                                                                 <span class="fas fa-user"></span>
@@ -63,8 +62,7 @@
                                                     <div class="input-group mb-3">
                                                         <div class="box-title">ユーザ名</div>
                                                         <input type="text" name="last_name" class="form-control"
-                                                            maxlength="20" placeholder="太郎"
-                                                            value="{{ user.last_name }}">
+                                                            placeholder="太郎" value="{{ user.last_name }}">
                                                         <div class="input-group-append">
                                                             <div class="input-group-text">
                                                                 <span class="fas fa-user"></span>
@@ -73,9 +71,8 @@
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <div class="box-title">メールアドレス</div>
-                                                        <input type="text" name="email" class="form-control"
-                                                            maxlength="255" placeholder="yamada@example.com"
-                                                            value="{{ user.email }}" required>
+                                                        <input type="text" name="email" class="form-control" 
+                                                            placeholder="yamada@example.com" value="{{ user.email }}">
                                                         <div class="input-group-append">
                                                             <div class="input-group-text">
                                                                 <span class="fas fa-envelope"></span>
@@ -84,9 +81,7 @@
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <div class="box-title">パスワード</div>
-                                                        <input id="password" type="password" name="password"
-                                                            class="form-control" minlength="8" maxlength="30"
-                                                            placeholder="password@123">
+                                                        <input id="password" type="password" name="password" class="form-control" placeholder="password@123">
                                                         <div class="input-group-append">
                                                             <div class="input-group-text">
                                                                 <span class="fas fa-lock"></span>
@@ -145,18 +140,4 @@
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
-    {% endblock %}
-
-    {% block page_js %}
-    <script>
-        $(document).ready(function () {
-            $("#edit-form").submit(function (event) {
-                var password = $("#password").val();
-                if (password && !/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&_/\\])[A-Za-z\d@$!%*?&_/\\]+$/.test(password)) {
-                    alert("パスワードには英数字と記号が少なくとも1つずつ含まれる必要があります");
-                    event.preventDefault();
-                }
-            });
-        });
-    </script>
     {% endblock %}

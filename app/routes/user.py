@@ -3,6 +3,7 @@ from flask import render_template, request, redirect
 from flask_login import logout_user, login_required, current_user
 from flask_login.mixins import AnonymousUserMixin
 from models.users import db, Users
+from validators import is_valid_regist, is_valid_edit
 
 user_blueprint = Blueprint('user', __name__)
 
@@ -17,27 +18,36 @@ def user_detail(user_id):
 @user_blueprint.route('/user_edit/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def user_edit(user_id):
-	fetched_user = Users.query.get(user_id)
+    fetched_user = Users.query.get(user_id)
 
-	if request.method == 'POST':
-	    # POST時にフォームからのリクエスト値を取得し、更新
-		fetched_user.first_name = request.form.get('first_name')
-		fetched_user.last_name = request.form.get('last_name')
-		fetched_user.password = request.form.get('password') or fetched_user.password
-		fetched_user.status = request.form.get('status')
-		fetched_user.deleted = True if request.form.get('deleted') == '1' else False
+    if request.method == 'POST':
+        request_first_name = request.form.get('first_name')
+        request_last_name = request.form.get('last_name')
+        request_email = request.form.get('email')
+        request_password = request.form.get('password')
+		
+        if not is_valid_edit(request_first_name, request_last_name, request_email, request_password):
+            return render_template('user_edit.html', user=fetched_user, current_user=current_user)
+        
+		# POST時にフォームからのリクエスト値を取得し、更新
+        fetched_user.first_name = request_first_name
+        fetched_user.last_name = request_last_name
+        fetched_user.password = request_password or fetched_user.password
+        fetched_user.email = request_email
+        fetched_user.status = request.form.get('status')
+        fetched_user.deleted = True if request.form.get('deleted') == '1' else False
 	
-		db.session.commit()
-
+        db.session.commit()
+        
 		# もし、ログインユーザが削除で編集された場合はログアウトして、ログイン画面へ
-		if fetched_user == current_user and request.form.get('deleted') == '1':
-			logout_user()
-			flash('ログインユーザーが削除された為、<br>ログアウトしました', 'success')
-			return redirect(url_for('login.login'))
-		else:
-			flash('更新処理が完了しました', 'success')
-			return redirect(url_for('user.user_list'))
-	return render_template('user_edit.html', user=fetched_user, current_user=current_user)
+        if fetched_user == current_user and request.form.get('deleted') == '1':
+            logout_user()
+            flash('ログインユーザーが削除された為、<br>ログアウトしました', 'success')
+            return redirect(url_for('login.login'))
+        else:
+            flash('更新処理が完了しました', 'success')
+            return redirect(url_for('user.user_list'))
+    return render_template('user_edit.html', user=fetched_user, current_user=current_user)
 
 # ユーザ一覧
 @user_blueprint.route('/user_list')
@@ -50,14 +60,21 @@ def user_list():
 @user_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        request_first_name = request.form.get('first_name')
+        request_last_name = request.form.get('last_name')
         request_email = request.form.get('email')
+        request_password = request.form.get('password')
+		
+        if not is_valid_regist(request_first_name, request_last_name, request_email, request_password):
+            if not isinstance(current_user, AnonymousUserMixin):
+                return render_template('logined_register.html', current_user=current_user)
+            return render_template('register.html')
+	
         fetched_user = Users.query.filter_by(email=request_email).first()
-        
+		
+        is_valid_regist
 		# POST時にフォームからのリクエスト値を取得してDBに登録
         if fetched_user is None:
-            request_first_name = request.form.get('first_name')
-            request_last_name = request.form.get('last_name')
-            request_password = request.form.get('password')
             request_status = request.form.get('status')
             request_deleted = request.form.get('deleted') == '1'
 
