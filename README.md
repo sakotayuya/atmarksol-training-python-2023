@@ -37,8 +37,8 @@ password入力を求められるのでpasswordと入力してenter
 
 <table>
     <tr>
-        <th width="500">ユーザ一覧</th>
-        <th width="500">ユーザ詳細</th>
+        <th width="500">ユーザ一覧画面</th>
+        <th width="500">ユーザ詳細画面</th>
     </tr>
     <tr>
         <td align="center">
@@ -60,7 +60,7 @@ password入力を求められるのでpasswordと入力してenter
 
 <table>
     <tr>
-        <th width="500">ユーザ編集</th>
+        <th width="500">ユーザ編集画面</th>
     </tr>
     <tr>
         <td align="center">
