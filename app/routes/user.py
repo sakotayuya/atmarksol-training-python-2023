@@ -26,6 +26,7 @@ def user_edit(user_id):
         request_email = request.form.get('email')
         request_password = request.form.get('password')
 		
+        # バリデーション
         if not is_valid_edit(request_first_name, request_last_name, request_email, request_password):
             return render_template('user_edit.html', user=fetched_user, current_user=current_user)
         
@@ -65,6 +66,7 @@ def register():
         request_email = request.form.get('email')
         request_password = request.form.get('password')
 		
+        # バリデーション
         if not is_valid_regist(request_first_name, request_last_name, request_email, request_password):
             if not isinstance(current_user, AnonymousUserMixin):
                 return render_template('logined_register.html', current_user=current_user)
@@ -72,7 +74,6 @@ def register():
 	
         fetched_user = Users.query.filter_by(email=request_email).first()
 		
-        is_valid_regist
 		# POST時にフォームからのリクエスト値を取得してDBに登録
         if fetched_user is None:
             request_status = request.form.get('status')
